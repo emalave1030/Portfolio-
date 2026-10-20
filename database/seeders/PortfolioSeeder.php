@@ -39,12 +39,12 @@ class PortfolioSeeder extends Seeder
             'linkedin_url' => 'https://www.linkedin.com/in/erwin-malave-89a20291',
             'languages' => 'Bilingual English/Spanish',
             'about' => [
-                'Full stack engineer with 5+ years designing and shipping production SaaS at scale. I build multi-tenant architectures, RESTful APIs, and role-based access control systems — currently serving 500+ residential communities at ParkingPass.',
-                'I work across Laravel, Vue 3, Angular, and React, with hands-on geospatial data visualization using Mapbox GL JS and QGIS. I own systems end to end — database design through UI — and I\'ve shipped in Web3, writing Solidity smart contracts for peer-to-peer Ethereum transfers.',
+                'Full stack engineer with 5+ years designing and building web software that businesses run on every day. I build multi-tenant architectures, RESTful APIs, and role-based access control systems — currently powering parking for 500+ apartment and residential properties at ParkingPass.',
+                'I work across Laravel, Vue 3, Angular, and React, with hands-on geospatial data visualization using Mapbox GL JS and QGIS. I own systems end to end — database design through UI — and I\'ve built in Web3, writing Solidity smart contracts for peer-to-peer Ethereum transfers.',
             ],
             'stats' => [
-                ['value' => '5+', 'label' => 'years shipping'],
-                ['value' => '500+', 'label' => 'communities served'],
+                ['value' => '5+', 'label' => 'years building software'],
+                ['value' => '500+', 'label' => 'residential properties served'],
                 ['value' => 'Laravel / Vue 3 / Angular / Mapbox GL JS', 'label' => 'core stack'],
             ],
         ]);
