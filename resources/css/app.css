@@ -1,0 +1,627 @@
+@import 'tailwindcss';
+
+@source '../js/**/*.vue';
+@source '../views/**/*.blade.php';
+
+/*
+ * Palette and type: mid-century modern. Declared once here; nothing else in
+ * the codebase names a hex value. The --color-* keys also generate Tailwind
+ * utilities (bg-panel, text-ink-dim, fill-mustard, …).
+ *
+ * Contrast on paper: ink 12.5:1, ink-dim 7.3:1, ink-faint 4.9:1, teal 5.2:1,
+ * orange 4.6:1. Mustard measures 1.8:1, so it is only ever a fill behind ink
+ * (6.9:1), never a text color.
+ */
+@theme {
+    --color-paper: #f3ead7;
+    --color-panel: #fbf5e9;
+    --color-line: #d8ccb4;
+    --color-ink: #2b2620;
+    --color-ink-dim: #54493d;
+    --color-ink-faint: #6f6353;
+    --color-mustard: #e2a62b;
+    --color-orange: #b4461a;
+    --color-teal: #1d6b67;
+
+    --font-display: 'Jost', 'Futura', 'Century Gothic', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* The palette under short names, for hand-written CSS. */
+:root {
+    --paper: var(--color-paper);
+    --panel: var(--color-panel);
+    --line: var(--color-line);
+    --ink: var(--color-ink);
+    --ink-dim: var(--color-ink-dim);
+    --ink-faint: var(--color-ink-faint);
+    --mustard: var(--color-mustard);
+    --orange: var(--color-orange);
+    --teal: var(--color-teal);
+}
+
+@layer base {
+    html {
+        background-color: var(--paper);
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        margin: 0;
+        background-color: var(--paper);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    h1, h2, h3 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        line-height: 1.05;
+        letter-spacing: 0.02em;
+    }
+
+    a {
+        color: inherit;
+        text-underline-offset: 0.25em;
+    }
+
+    /* Visible, high-contrast focus on every interactive element. */
+    :focus-visible {
+        outline: 2px solid var(--teal);
+        outline-offset: 3px;
+        border-radius: 2px;
+    }
+
+    ::selection {
+        background-color: var(--mustard);
+        color: var(--ink);
+    }
+}
+
+.skip-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    background: var(--mustard);
+    color: var(--ink);
+    font-weight: 600;
+    /* Moved up rather than out: a large negative left can widen the page. */
+    transform: translateY(-200%);
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+/* Value above label, with dt still first in the markup. */
+.stat {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+}
+
+/* --- Display type ------------------------------------------------------- */
+
+.eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.display-name {
+    font-size: clamp(3.25rem, 13vw, 7.5rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+.section-title {
+    font-size: clamp(1.75rem, 5vw, 2.75rem);
+    font-weight: 500;
+    margin: 0;
+}
+
+/* A small mustard disc carries the number: the period's sunburst dot. */
+.section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 9999px;
+    background-color: var(--mustard);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+/* Scales with the viewport: the address is 25 characters and must not
+   push the page wider than the screen at 375px, even beside its button. */
+.contact-email {
+    display: inline-block;
+    max-width: 100%;
+    font-size: clamp(1.25rem, 5.5vw, 2rem);
+    letter-spacing: 0.01em;
+    overflow-wrap: anywhere;
+}
+
+/* --- Buttons ------------------------------------------------------------ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.6rem;
+    border: 2px solid var(--ink);
+    border-radius: 9999px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+
+.btn:hover {
+    background-color: var(--panel);
+    box-shadow: 3px 3px 0 var(--ink);
+    transform: translate(-2px, -2px);
+}
+
+.btn--primary {
+    background-color: var(--mustard);
+}
+
+.btn--primary:hover {
+    background-color: var(--mustard);
+}
+
+.btn--small {
+    padding: 0.4rem 0.95rem;
+    font-size: 0.8125rem;
+}
+
+/* --- Timeline ----------------------------------------------------------- */
+
+.timeline-rail {
+    background: linear-gradient(to bottom, var(--orange), var(--line) 22%, var(--line));
+}
+
+.timeline-dot {
+    border: 2px solid var(--ink-faint);
+    background-color: var(--paper);
+}
+
+.timeline-dot--current {
+    border-color: var(--orange);
+    background-color: var(--orange);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--orange) 18%, transparent);
+}
+
+/* Collapsed bullets stay in the DOM so print can reveal them. */
+.bullet--hidden {
+    display: none;
+}
+
+/* --- Chips -------------------------------------------------------------- */
+
+.chip {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 9999px;
+    background-color: var(--panel);
+    color: var(--ink-dim);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+}
+
+.chip--highlighted {
+    border-color: var(--teal);
+    background-color: var(--teal);
+    color: var(--paper);
+}
+
+.badge-current {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.65rem;
+    border-radius: 9999px;
+    background-color: var(--orange);
+    color: var(--paper);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+/* --- Cards -------------------------------------------------------------- */
+
+/* Hard offset shadow, no blur: printed-catalogue depth rather than glow. */
+.project-card {
+    border: 2px solid var(--ink);
+    border-radius: 1.25rem;
+    background-color: var(--panel);
+    box-shadow: 6px 6px 0 var(--accent, var(--mustard));
+}
+
+/* --- Today's light ------------------------------------------------------ */
+
+/*
+ * A live instrument set into the page: full-bleed, inverted, unnumbered.
+ * Contrast on ink: paper 12.5:1, mustard 6.9:1, paper at 70% about 7:1.
+ */
+.light-band :focus-visible {
+    outline-color: var(--mustard);
+}
+
+.light-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--paper) 75%, transparent);
+}
+
+.live-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+    background-color: var(--mustard);
+    animation: live-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+    50% {
+        box-shadow: 0 0 0 5px color-mix(in srgb, var(--mustard) 25%, transparent);
+    }
+}
+
+.btn--on-dark {
+    border-color: var(--paper);
+    color: var(--paper);
+}
+
+.btn--on-dark:hover {
+    background-color: color-mix(in srgb, var(--paper) 10%, transparent);
+    box-shadow: 3px 3px 0 var(--mustard);
+}
+
+.readout {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    font-variant-numeric: tabular-nums;
+}
+
+.project-card:nth-child(3n + 2) {
+    --accent: var(--teal);
+}
+
+.project-card:nth-child(3n + 3) {
+    --accent: var(--orange);
+}
+
+/* --- Links -------------------------------------------------------------- */
+
+.link-underline {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--teal);
+    text-decoration-thickness: 2px;
+    transition: color 150ms ease, text-decoration-color 150ms ease;
+}
+
+.link-underline:hover {
+    color: var(--teal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* --- Sticky topbar ------------------------------------------------------ */
+
+.topbar {
+    transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.topbar--hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.topbar--visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+
+/* ------------------------------------------------------------------------
+ * Print — Cmd+P produces a resume, not a screenshot of a website.
+ *
+ * The palette tokens are redefined once here; every utility and hand-written
+ * rule reads through them, so the whole page flips to black on white without
+ * relying on the reader's "print background graphics" setting.
+ * ---------------------------------------------------------------------- */
+
+@page {
+    margin: 12mm 13mm;
+}
+
+/* The résumé's contact line: on screen the Contact section does this job. */
+.print-contact {
+    display: none;
+}
+
+@media print {
+    :root {
+        --color-paper: #fff;
+        --color-panel: #fff;
+        --color-line: #b4b4b4;
+        --color-ink: #000;
+        --color-ink-dim: #1a1a1a;
+        --color-ink-faint: #454545;
+        --color-mustard: #000;
+        --color-orange: #000;
+        --color-teal: #000;
+    }
+
+    html,
+    body {
+        background: #fff !important;
+        color: #000 !important;
+        font-size: 9.5pt;
+        line-height: 1.35;
+    }
+
+    /* Screen furniture: nothing here belongs on paper. The contact section
+       and footer move into the header line, and the stats repeat the About. */
+    .topbar,
+    .portrait,
+    #light,
+    .skip-link,
+    .hero-actions,
+    .hero-stats,
+    .badge-current,
+    .section-number,
+    .timeline-rail,
+    .timeline-dot,
+    #contact,
+    footer,
+    button,
+    a.btn {
+        display: none !important;
+    }
+
+    .print-contact {
+        display: block !important;
+    }
+
+    a {
+        color: #000 !important;
+        text-decoration: none !important;
+        border: 0 !important;
+    }
+
+    /* The hero is a résumé header, not a full page. */
+    header#top {
+        min-height: 0 !important;
+        padding: 0 0 0.5rem !important;
+    }
+
+    header#top > div {
+        padding: 0 !important;
+    }
+
+    .display-name {
+        margin-top: 0.15rem !important;
+        font-size: 22pt;
+        line-height: 1.1;
+    }
+
+    .display-name + p {
+        margin-top: 0.1rem !important;
+        font-size: 10.5pt !important;
+    }
+
+    .eyebrow {
+        font-size: 7.5pt;
+    }
+
+    /* Sections read as résumé headings: a rule, then a small caps title. */
+    main {
+        padding: 0 !important;
+    }
+
+    .section {
+        padding: 0.5rem 0 0.2rem !important;
+    }
+
+    section > header {
+        margin-bottom: 0.4rem !important;
+        padding-top: 0.35rem !important;
+        border-color: #000 !important;
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    .section-title {
+        margin: 0 !important;
+        font-size: 10.5pt;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    #about > div {
+        max-width: none;
+        font-size: inherit !important;
+    }
+
+    #about > div > p + p {
+        margin-top: 0.35rem !important;
+    }
+
+    /* Experience: a long role may cross the page break, but a role's
+       heading lines never leave its first bullets behind. */
+    .experience-item {
+        padding: 0 0 0.6rem !important;
+    }
+
+    .experience-item h3 {
+        font-size: 10.5pt !important;
+    }
+
+    .experience-item > div,
+    .experience-item > p {
+        margin-top: 0 !important;
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    .experience-item > p {
+        display: inline;
+    }
+
+    .experience-item > p.eyebrow::before {
+        content: ' \00b7  ';
+    }
+
+    .experience-item ul {
+        margin-top: 0.2rem !important;
+    }
+
+    .experience-item ul > li + li {
+        margin-top: 0.1rem !important;
+    }
+
+    /* Every bullet prints, whatever the toggle state was on screen. */
+    .bullet--hidden {
+        display: list-item !important;
+        list-style: none;
+    }
+
+    .experience-item ul > li {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* The screen bullet marker is a background block, and browsers do not
+       print backgrounds. Swap in a real character. */
+    .experience-item ul li > span[aria-hidden='true'] {
+        display: none !important;
+    }
+
+    .experience-item ul li::before {
+        content: '\2022';
+        position: absolute;
+        left: 0.25rem;
+    }
+
+    /* Skills: one line per group, label then a comma list. */
+    #skills > div > div {
+        display: grid;
+        grid-template-columns: 8.5rem 1fr;
+        gap: 0.75rem;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    #skills > div > div {
+        margin: 0 0 0.2rem !important;
+    }
+
+    #skills h3 {
+        font-size: 9pt !important;
+        color: #000 !important;
+    }
+
+    #skills ul,
+    .project-card ul {
+        display: block !important;
+        margin: 0 !important;
+    }
+
+    .chip {
+        display: inline;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent !important;
+        color: inherit !important;
+        font-size: inherit;
+    }
+
+    #skills .chip + .chip::before {
+        content: ', ';
+    }
+
+    /* Projects: plain entries, not cards. */
+    #projects ul {
+        display: block !important;
+    }
+
+    .project-card {
+        display: block !important;
+        margin-bottom: 0.45rem;
+        padding: 0 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .project-card h3 {
+        font-size: 10pt !important;
+    }
+
+    .project-card > ul {
+        font-size: 8.5pt;
+        color: #454545;
+    }
+
+    .project-card .chip + .chip::before {
+        content: ' \00b7  ';
+    }
+
+    .project-card > p {
+        margin-top: 0.1rem !important;
+    }
+
+    .project-card > p:last-child {
+        margin-top: 0 !important;
+        font-size: 8.5pt;
+    }
+}
