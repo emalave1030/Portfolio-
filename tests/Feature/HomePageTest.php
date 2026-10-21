@@ -23,7 +23,7 @@ class HomePageTest extends TestCase
         $this->get(route('home'))
             ->assertOk()
             ->assertSee('<title>Erwin Malave</title>', false)
-            ->assertSee('"@type":"WebSite","name":"Erwin Malave"', false);
+            ->assertSee('{"@context": "https://schema.org", "@type": "WebSite", "name": "Erwin Malave"', false);
     }
 
     public function test_link_previews_use_the_wordmark_card(): void

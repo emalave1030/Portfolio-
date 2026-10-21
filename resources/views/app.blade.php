@@ -10,13 +10,9 @@
         <link rel="canonical" href="{{ $profile['site_url'] }}">
 
         {{-- The site name Google shows above the result title. --}}
+        {{-- "@@" keeps Blade from reading @context as one of its directives. --}}
         <script type="application/ld+json">
-            {!! json_encode([
-                '@context' => 'https://schema.org',
-                '@type' => 'WebSite',
-                'name' => $profile['name'],
-                'url' => $profile['site_url'],
-            ], JSON_UNESCAPED_SLASHES) !!}
+            {"@@context": "https://schema.org", "@type": "WebSite", "name": @json($profile['name']), "url": @json($profile['site_url'])}
         </script>
 
         {{-- Link previews in messages and social apps: the wordmark card, not a page screenshot. --}}
