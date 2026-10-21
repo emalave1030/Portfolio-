@@ -18,11 +18,12 @@ class HomePageTest extends TestCase
         $this->seed(PortfolioSeeder::class);
     }
 
-    public function test_the_tab_title_is_the_family_name_alone(): void
+    public function test_search_results_and_the_tab_show_the_full_name(): void
     {
         $this->get(route('home'))
             ->assertOk()
-            ->assertSee('<title>Malave</title>', false);
+            ->assertSee('<title>Erwin Malave</title>', false)
+            ->assertSee('"@type":"WebSite","name":"Erwin Malave"', false);
     }
 
     public function test_link_previews_use_the_wordmark_card(): void

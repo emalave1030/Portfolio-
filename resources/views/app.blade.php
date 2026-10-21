@@ -4,10 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light">
-    <title>{{ $profile ? $profile['family_name'] : config('app.name') }}</title>
+    <title>{{ $profile ? $profile['name'] : config('app.name') }}</title>
     @if ($profile)
         <meta name="description" content="{{ $profile['name'] }} — {{ $profile['title'] }}, {{ $profile['location'] }}.">
         <link rel="canonical" href="{{ $profile['site_url'] }}">
+
+        {{-- The site name Google shows above the result title. --}}
+        <script type="application/ld+json">
+            {!! json_encode([
+                '@context' => 'https://schema.org',
+                '@type' => 'WebSite',
+                'name' => $profile['name'],
+                'url' => $profile['site_url'],
+            ], JSON_UNESCAPED_SLASHES) !!}
+        </script>
 
         {{-- Link previews in messages and social apps: the wordmark card, not a page screenshot. --}}
         <meta property="og:type" content="website">
