@@ -107,12 +107,12 @@ class PortfolioSeeder extends Seeder
     {
         $groups = [
             'Languages' => ['JavaScript (ES6+)', 'TypeScript', 'PHP 8.4', 'HTML5', 'CSS3', 'C++', 'Solidity'],
-            'Frontend' => ['Vue 3 (Composition API)', 'Vue Router', 'Angular', 'React', 'Vite', 'Tailwind CSS', 'CSS Modules', 'IndexedDB (offline-first storage)', 'Responsive design with light and dark themes'],
-            'Backend' => ['Laravel 13', 'Node.js', 'REST APIs', 'GraphQL', 'Laravel Scheduler and Queues', 'Laravel Notifications and Mail', 'SQLite', 'Database Design', 'Multi-tenant architecture', 'RBAC'],
+            'Frontend' => ['Vue 3 (Composition API)', 'Vue Router', 'Angular', 'React', 'Vite', 'Tailwind CSS', 'Inertia.js', 'CSS Modules', 'IndexedDB (offline-first storage)', 'Responsive design with light and dark themes', 'Installable PWAs with an offline fallback'],
+            'Backend' => ['Laravel 13', 'Node.js', 'REST APIs', 'GraphQL', 'Third-party API integration', 'Laravel Fortify', 'Laravel Scheduler and Queues', 'Laravel Notifications and Mail', 'MySQL', 'SQLite', 'Database Design', 'Multi-tenant architecture', 'RBAC'],
             'Geospatial' => ['Mapbox GL JS', 'QGIS', 'Map rendering', 'Geospatial data visualization'],
-            'Security' => ['Web Crypto API (client-side encryption)', 'End-to-end encryption', 'Zero-knowledge authentication', 'Argon2id password hashing', 'CSP and security headers', 'CSRF protection and rate limiting', 'Signed URLs'],
-            'Testing' => ['Pest', 'Puppeteer (headless-Chrome end-to-end tests)'],
-            'DevOps & Workflow' => ['Laravel Forge', 'DigitalOcean', 'Zero-downtime push-to-deploy', 'Nginx', "Let's Encrypt SSL", 'DNS configuration', 'Git', 'GitHub', 'Jenkins', 'CI/CD', 'WordPress', 'Visual Studio Code', 'Agile workflows'],
+            'Security' => ['Web Crypto API (client-side encryption)', 'End-to-end encryption', 'Zero-knowledge authentication', 'Passkeys / WebAuthn (Face ID sign-in)', 'Two-factor authentication (TOTP)', 'Argon2id password hashing', 'CSP and security headers', 'CSRF protection and rate limiting', 'Signed URLs'],
+            'Testing' => ['Pest', 'Vitest', 'PHPStan / Larastan (static analysis)', 'Puppeteer (headless-Chrome end-to-end tests)'],
+            'DevOps & Workflow' => ['Laravel Forge', 'DigitalOcean', 'Zero-downtime push-to-deploy', 'Nginx', "Let's Encrypt SSL", 'DNS configuration', 'Git', 'GitHub', 'GitHub Actions', 'Jenkins', 'CI/CD', 'WordPress', 'Visual Studio Code', 'Agile workflows'],
             'Web3' => ['Solidity', 'Smart Contracts', 'Ethereum', 'Cryptocurrency'],
         ];
 
@@ -136,6 +136,12 @@ class PortfolioSeeder extends Seeder
     private function seedProjects(): void
     {
         $projects = [
+            [
+                'title' => 'PrepTally: Meal Prep Tracker',
+                'stack' => ['Laravel', 'Vue 3', 'TypeScript', 'Inertia', 'MySQL'],
+                'link' => 'https://preptally.app',
+                'description' => 'A meal-prep tracker for people who cook in bulk. Log a batch, tap a portion each time you eat, and see what\'s fresh, what to eat soon and what\'s expired. Portions are counted in tally marks, which is also the logo. It suggests recipes from a protein and a side using a public recipe API, notices when a dish is on repeat, installs like an app on your phone, and supports Face ID sign-in with passkeys.',
+            ],
             [
                 'title' => 'NorthStar: Goal & Habit Tracker',
                 'stack' => ['Laravel', 'Vue 3', 'TypeScript', 'Web Crypto', 'SQLite'],

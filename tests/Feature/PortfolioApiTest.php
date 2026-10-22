@@ -37,7 +37,7 @@ class PortfolioApiTest extends TestCase
 
         $this->assertCount(3, $response->json('experiences'));
         $this->assertCount(8, $response->json('skill_groups'));
-        $this->assertCount(3, $response->json('projects'));
+        $this->assertCount(4, $response->json('projects'));
     }
 
     public function test_the_payload_is_not_wrapped_in_an_envelope(): void
@@ -79,16 +79,17 @@ class PortfolioApiTest extends TestCase
     {
         $projects = $this->getJson('/api/portfolio')->json('projects');
 
-        $this->assertSame('northstarplan.app', $projects[0]['link_label']);
-        $this->assertSame('trndecoin.com', $projects[1]['link_label']);
-        $this->assertSame('trnde-videos-final.vercel.app', $projects[2]['link_label']);
+        $this->assertSame('preptally.app', $projects[0]['link_label']);
+        $this->assertSame('northstarplan.app', $projects[1]['link_label']);
+        $this->assertSame('trndecoin.com', $projects[2]['link_label']);
+        $this->assertSame('trnde-videos-final.vercel.app', $projects[3]['link_label']);
     }
 
     public function test_a_project_without_a_link_has_no_label(): void
     {
         Project::query()->where('title', 'TrndeCoin')->update(['link' => null]);
 
-        $project = $this->getJson('/api/portfolio')->json('projects.1');
+        $project = $this->getJson('/api/portfolio')->json('projects.2');
 
         $this->assertNull($project['link']);
         $this->assertNull($project['link_label']);
